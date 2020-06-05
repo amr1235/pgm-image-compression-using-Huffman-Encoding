@@ -40,7 +40,7 @@ static size_t LeftChildIndex(size_t Parentindex){
  return L_child_idx;
 }
 static size_t RightChildIndex (size_t Parentindex){
- size_t R_child_idx = (Parentindex*2) +1 ;
+ size_t R_child_idx = (Parentindex*2) +2 ;
  return R_child_idx;
 }
 static size_t ParentIndex (size_t Childindex){
@@ -52,10 +52,12 @@ static size_t ParentIndex (size_t Childindex){
  {
   P_idx = (Childindex-2)/2;
  }
+
+ return P_idx;
 }
 void FixAfterInsertion(size_t child_idx){
  size_t parent_idx = ParentIndex(child_idx);
- if (child_idx < 0 && A[child_idx].frequancy < A[parent_idx].frequancy){
+ if (child_idx > 0 && A[child_idx].frequancy < A[parent_idx].frequancy){
   swap(A[child_idx], A[parent_idx]);
   FixAfterInsertion(parent_idx);
  }

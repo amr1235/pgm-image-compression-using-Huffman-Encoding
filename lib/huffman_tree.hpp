@@ -9,7 +9,7 @@ class huffman_tree
 private:
 
 public:
-    huffman_tree(); // accepts frequancy table(min heap) like this [{'a',2},{'b',5},{'c',12},{'d',20}]
+    huffman_tree();
     heapNode<valueType> * buildHuffManTree(min_heap<valueType> * Qu);
      
 };
@@ -24,15 +24,16 @@ heapNode<valueType> *  huffman_tree<valueType>::buildHuffManTree(min_heap<valueT
         // then extrach node from the heap and make it second Child 
         heapNode<valueType> s = Qu->Extraction();
         //creat new node of sum last two nodes 
-        heapNode<valueType> sumNode = {
-            NULL,
-            (f.frequancy + s.frequancy),
-            &f,
-            &s
-        };
+        heapNode<valueType> sumNode ;
+        sumNode.frequancy = (f.frequancy + s.frequancy);
+        sumNode.value = 0000000;
+        sumNode.leftChild = &f;
+        sumNode.rightChild = &s;
         //insert the new node to the heap 
         Qu->Insertion(sumNode);
     }
+    heapNode<valueType> * root = &(Qu->Extraction()); 
+    return root;
     
 }
 
