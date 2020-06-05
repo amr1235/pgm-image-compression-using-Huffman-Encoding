@@ -2,32 +2,39 @@
 #define __priorityQ__
 
 #include <iostream>
+#include <vector>
 
 template<class valuetype>
-struct node
+struct heapNode
 {
     valuetype value;
     int frequancy;
+    heapNode<valuetype> * leftChild;
+    heapNode<valuetype> * rightChild;
 };
 using namespace std;
 template <typename T>
 class min_heap{
- void Insertion(node<T> info){
+ void Insertion(heapNode<T> info){
   A.push_back(info);
   size_t childidx = A.size() - 1;
   FixAfterInsertion(childidx);
  }
- node<T> Extraction(){
+ heapNode<T> Extraction(){
   if (A.empty() ) exit(1);
   size_t childidx = A.size() -1; 
   swap(A[childidx], A[0]);
-  node<T> Value_of_root = A.back();
+  heapNode<T> Value_of_root = A.back();
   A.pop_back();
   FixAfterExtraction(0);
   return Value_of_root;
  }
+
+ int size(){
+     return A.size();
+ }
 private:
-vector<node<T>> A;
+vector<heapNode<T>> A;
 static size_t LeftChildIndex(size_t Parentindex){
  size_t L_child_idx = (Parentindex*2) + 1;
  return L_child_idx;
