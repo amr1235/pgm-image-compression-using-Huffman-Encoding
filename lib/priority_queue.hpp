@@ -2,25 +2,32 @@
 #define __priorityQ__
 
 #include <iostream>
+
+template<class valuetype>
+struct node
+{
+    valuetype value;
+    int frequancy;
+};
 using namespace std;
 template <typename T>
 class min_heap{
- void Insertion(T info){
+ void Insertion(node<T> info){
   A.push_back(info);
   size_t childidx = A.size() - 1;
   FixAfterInsertion(childidx);
  }
- T Extraction(){
+ node<T> Extraction(){
   if (A.empty() ) exit(1);
   size_t childidx = A.size() -1; 
   swap(A[childidx], A[0]);
-  T Value_of_root = A.back();
+  node<T> Value_of_root = A.back();
   A.pop_back();
   FixAfterExtraction(0);
   return Value_of_root;
  }
 private:
-vector <T> A;
+vector<node<T>> A;
 static size_t LeftChildIndex(size_t Parentindex){
  size_t L_child_idx = (Parentindex*2) + 1;
  return L_child_idx;
@@ -41,7 +48,7 @@ static size_t ParentIndex (size_t Childindex){
 }
 void FixAfterInsertion(size_t child_idx){
  size_t parent_idx = ParentIndex(child_idx);
- if (child_idx < 0 && A[child_idx] < A[parent_idx]){
+ if (child_idx < 0 && A[child_idx].frequancy < A[parent_idx].frequancy){
   swap(A[child_idx], A[parent_idx]);
   FixAfterInsertion(parent_idx);
  }
@@ -50,10 +57,10 @@ void FixAfterExtraction(size_t parent_idx){
 size_t left_idx = LeftChildIndex(parent_idx);
 size_t right_idx = RightChildIndex(parent_idx);
 size_t minimum = parent_idx;
-if (left_idx < A.size() && A[left_idx]<A[parent_idx]) {
+if (left_idx < A.size() && A[left_idx].frequancy < A[parent_idx].frequancy ) {
  minimum = left_idx;
 }
-if (right_idx < A.size() && A[right_idx] < A[parent_idx]){
+if (right_idx < A.size() && A[right_idx].frequancy < A[parent_idx].frequancy ){
  minimum = right_idx;
 }
 if (minimum != parent_idx){
