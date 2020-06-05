@@ -1,4 +1,66 @@
 #ifndef __priorityQ_
 #define __priorityQ__
 
+#include <iostream>
+using namespace std;
+template <typename T>
+class min_heap{
+ void Insertion(T info){
+  A.push_back(info);
+  size_t childidx = A.size() - 1;
+  FixAfterInsertion(childidx);
+ }
+ T Extraction(){
+  if (A.empty() ) exit(1);
+  size_t childidx = A.size() -1; 
+  swap(A[childidx], A[0]);
+  T Value_of_root = A.back();
+  A.pop_back();
+  FixAfterExtraction(0);
+  return Value_of_root;
+ }
+private:
+vector <T> A;
+static size_t LeftChildIndex(size_t Parentindex){
+ size_t L_child_idx = (Parentindex*2) + 1;
+ return L_child_idx;
+}
+static size_t RightChildIndex (size_t Parentindex){
+ size_t R_child_idx = (Parentindex*2) +1 ;
+ return R_child_idx;
+}
+static size_t ParentIndex (size_t Childindex){
+ size_t P_idx;
+ if (Childindex%2 == 1){
+  P_idx = (Childindex-1)/2;
+ }
+ else
+ {
+  P_idx = (Childindex-2)/2;
+ }
+}
+void FixAfterInsertion(size_t child_idx){
+ size_t parent_idx = ParentIndex(child_idx);
+ if (child_idx < 0 && A[child_idx] < A[parent_idx]){
+  swap(A[child_idx], A[parent_idx]);
+  FixAfterInsertion(parent_idx);
+ }
+}
+void FixAfterExtraction(size_t parent_idx){
+size_t left_idx = LeftChildIndex(parent_idx);
+size_t right_idx = RightChildIndex(parent_idx);
+size_t minimum = parent_idx;
+if (left_idx < A.size() && A[left_idx]<A[parent_idx]) {
+ minimum = left_idx;
+}
+if (right_idx < A.size() && A[right_idx] < A[parent_idx]){
+ minimum = right_idx;
+}
+if (minimum != parent_idx){
+ swap(A[minimum],A[parent_idx]);
+ FixAfterExtraction(minimum);
+}
+}
+};
+
 #endif
