@@ -7,10 +7,7 @@ template<class valueType>
 class huffman_tree
 {
 private:
-    node<valueType> minheap[10];
-    node<valueType> * root;
-    node<valueType> * creatNode(valueType value,int frequancy); // using this function to creat a node to insert it to the tree 
-    void insert(node<valueType>* root,node<valueType>* leftChild,node<valueType> rightChild); // to insert you need the root and left and right child
+
 public:
     huffman_tree(); // accepts frequancy table(min heap) like this [{'a',2},{'b',5},{'c',12},{'d',20}]
     heapNode<valueType> * buildHuffManTree(min_heap<valueType> * Qu);
