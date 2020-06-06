@@ -1,26 +1,28 @@
 #ifndef __HuffmanTree__
 #define __HuffmanTree__
 #include "priority_queue.hpp"
-#include <unordered_map>
+#include <map>
 #include <vector>
 #include <string>
-
+#include <fstream>
 
 
 template<class valueType>   
-class huffman_tree
+class huffman
 {
 private:
     heapNode<valueType> * Root; 
-    void hufmaanEncoding(heapNode<valueType> * root,string str,unordered_map<valueType, string> &huffmanCode);
+    void hufmaanEncoding(heapNode<valueType> * root,string str,map<valueType, string> &huffmanCode);
+    void decode(heapNode<valueType> * root, int &index, string str);
 public:
-    huffman_tree();
+    huffman();
     void buildHuffManTree(min_heap<valueType> * Qu);
-    void encode(unordered_map<valueType, string> &map);  // this function will take root of the tree and return a map with valuse and its binary code as map 
+    void creatEncodedFile(string fileName,vector<valueType> Data,min_heap<valueType> * Qu);
+    void encode(map<valueType, string> &map);  // this function will take root of the tree and return a map with valuse and its binary code as map 
 };
 
 template<class valueType>
-void huffman_tree<valueType>::buildHuffManTree(min_heap<valueType> * Qu){  // [{'a',2},{'b',5},{'c',12},{'d',20},{'e',30},{'f',40}]
+void huffman<valueType>::buildHuffManTree(min_heap<valueType> * Qu){  // [{'a',2},{'b',5},{'c',12},{'d',20},{'e',30},{'f',40}]
 
     while (Qu->size() > 1)
     {
@@ -43,7 +45,7 @@ void huffman_tree<valueType>::buildHuffManTree(min_heap<valueType> * Qu){  // [{
 }
 
 template<class valueType>
-void huffman_tree<valueType>::hufmaanEncoding(heapNode<valueType> * root,string str,unordered_map<valueType, string> &huffmanCode){
+void huffman<valueType>::hufmaanEncoding(heapNode<valueType> * root,string str,map<valueType, string> &huffmanCode){
     if(root == nullptr) return;
 
     if(root->leftChild != nullptr){
@@ -62,7 +64,24 @@ void huffman_tree<valueType>::hufmaanEncoding(heapNode<valueType> * root,string 
 }
 
 template<class valueType>
-void huffman_tree<valueType>::encode(unordered_map<valueType, string> &map){
+void huffman<valueType>::creatEncodedFile(string fileName,vector<valueType> Data,min_heap<valueType> * Qu){
+    buildHuffManTree(Qu);
+    map<valueType,string> map ;
+    encode(map);
+    string totalBits = "";
+    for (size_t i = 0; i < Data.size(); i++)
+    {
+        valueType px = Data[i];
+        string bits = map[px];
+        totalBits += bits;
+    }
+    //now we have the encoded bits in string like this "1110110101010111001111000"
+    ofstream output(fileName + ".enc", ios::out | ios::binary );
+    
+}
+
+template<class valueType>
+void huffman<valueType>::encode(map<valueType, string> &map){
     hufmaanEncoding(Root,"",map);
 }
 
