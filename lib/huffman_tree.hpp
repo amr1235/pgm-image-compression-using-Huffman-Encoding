@@ -11,14 +11,16 @@ template<class valueType>
 class huffman_tree
 {
 private:
+    heapNode<valueType> * Root; 
+    void hufmaanEncoding(heapNode<valueType> * root,string str,unordered_map<valueType, string> &huffmanCode);
 public:
     huffman_tree();
-    heapNode<valueType> * buildHuffManTree(min_heap<valueType> * Qu);
-    void hufmaanEncoding(heapNode<valueType> * root,string str,unordered_map<valueType, string> &huffmanCode); // this function will take root of the tree and return a map with valuse and its binary code as map 
+    void buildHuffManTree(min_heap<valueType> * Qu);
+    void encode(unordered_map<valueType, string> &map);  // this function will take root of the tree and return a map with valuse and its binary code as map 
 };
 
 template<class valueType>
-heapNode<valueType> *  huffman_tree<valueType>::buildHuffManTree(min_heap<valueType> * Qu){  // [{'a',2},{'b',5},{'c',12},{'d',20},{'e',30},{'f',40}]
+void huffman_tree<valueType>::buildHuffManTree(min_heap<valueType> * Qu){  // [{'a',2},{'b',5},{'c',12},{'d',20},{'e',30},{'f',40}]
 
     while (Qu->size() > 1)
     {
@@ -36,7 +38,7 @@ heapNode<valueType> *  huffman_tree<valueType>::buildHuffManTree(min_heap<valueT
         Qu->Insertion(sumNode);
     }
     heapNode<valueType> * root = &(Qu->Extraction()); 
-    return root;
+    Root = &root;
     
 }
 
@@ -59,7 +61,10 @@ void huffman_tree<valueType>::hufmaanEncoding(heapNode<valueType> * root,string 
 
 }
 
-
+template<class valueType>
+void huffman_tree<valueType>::encode(unordered_map<valueType, string> &map){
+    hufmaanEncoding(Root,"",map);
+}
 
 
 #endif
