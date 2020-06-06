@@ -1,9 +1,9 @@
 #ifndef __HuffmanTree__
 #define __HuffmanTree__
 #include "priority_queue.hpp"
-#include "map"
-#include "vector"
-
+#include <unordered_map>
+#include <vector>
+#include <string>
 
 
 
@@ -14,7 +14,7 @@ private:
 public:
     huffman_tree();
     heapNode<valueType> * buildHuffManTree(min_heap<valueType> * Qu);
-    voidhufmaanEncoding(map<valueType,vector<int>> object,heapNode<valueType> * root,vector<int> * array); // this function will take root of the tree and return a map with valuse and its binary code as map 
+    voidhufmaanEncoding(heapNode<valueType> * root,string str,unordered_map<valueType, string> &huffmanCode); // this function will take root of the tree and return a map with valuse and its binary code as map 
 };
 
 template<class valueType>
@@ -41,19 +41,22 @@ heapNode<valueType> *  huffman_tree<valueType>::buildHuffManTree(min_heap<valueT
 }
 
 template<class valueType>
-void hufmaanEncoding(map<valueType,vector<int>> object ,heapNode<valueType> * root,vector<int> * array){
+void huffman_tree<valueType>::hufmaanEncoding(heapNode<valueType> * root,string str,unordered_map<valueType, string> &huffmanCode){
+    if(root == nullptr) return;
+
     if(root->leftChild != nullptr){
-        array->push_back(0);
-        hufmaanEncoding(root->leftChild,array);
+        str.push_back('0');
+        hufmaanEncoding(root->leftChild, str, huffmanCode);
     }
-    if (root->rightChild != nullptr) { 
-  
-        array->push_back(1); 
-        hufmaanEncoding(root->rightChild,array); 
-    } 
-    if( !(root->leftChild) && !(root->rightChild) ){
-        object->insert(pair<valueType,vector<int>>(root->value,array));
+    if(root->leftChild != nullptr){
+        str.push_back('1');
+        hufmaanEncoding(root->rightChild, str, huffmanCode);
     }
+	
+    if (!root->leftChild && !root->rightChild) {
+		huffmanCode[root->value] = str;
+	}
+
 }
 
 

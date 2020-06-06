@@ -10,7 +10,7 @@ struct heapNode
     valuetype value;
     int frequancy;
     heapNode<valuetype> * leftChild;
-    heapNode<valuetype> * rightChild;
+    heapNode<valuetype> * rightChild ;
 };
 using namespace std;
 template <typename T>
