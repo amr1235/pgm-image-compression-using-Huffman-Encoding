@@ -14,7 +14,7 @@ private:
 public:
     huffman_tree();
     heapNode<valueType> * buildHuffManTree(min_heap<valueType> * Qu);
-    voidhufmaanEncoding(heapNode<valueType> * root,string str,unordered_map<valueType, string> &huffmanCode); // this function will take root of the tree and return a map with valuse and its binary code as map 
+    void hufmaanEncoding(heapNode<valueType> * root,string str,unordered_map<valueType, string> &huffmanCode); // this function will take root of the tree and return a map with valuse and its binary code as map 
 };
 
 template<class valueType>
