@@ -76,7 +76,28 @@ void huffman<valueType>::creatEncodedFile(string fileName,vector<valueType> Data
         totalBits += bits;
     }
     //now we have the encoded bits in string like this "1110110101010111001111000"
-    ofstream output(fileName + ".enc", ios::out | ios::binary );
+    ofstream output("fileName.enc", ios::out | ios::binary );
+    if(!output){
+        exit(1);
+    }
+    int j = 8 ;
+    while (1)
+    {   
+        string byte  = "" ;
+        if(totalbits.size() < 8){
+            byte = totalbits;
+            bitset<8> b(byte);
+            char c = (char) b.to_ullong();
+            output.write(&c,b.size());
+            break; 
+            
+        }
+        byte = totalbits.substr(0,8);
+        totalbits.erase(0,8);
+        bitset<8> b(byte);
+        char c = (char) b.to_ullong();
+        output.write(&c,b.size());
+    }
     
 }
 
