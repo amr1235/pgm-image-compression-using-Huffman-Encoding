@@ -57,30 +57,18 @@ for(Freq.freq_table :: iterator it = Freq.freq_table.begin(); it != Freq.freq_ta
 
 for_encoding P5_freq_table(string filename){
 ifstream ifile;
-string data; int num_of_colors=0 ; int m[4];
-ifile.open(filename , ifstream::binary);
+string data; unsigned char x;
+ifile.open(filename , ios::binary);
+getline(ifile,data);
 getline(ifile,data);
 getline( ifile , data );
-char * temp = data;
-for(int i=0 ; i<data.length(); i++){
-  if(*temp = " ")
-  temp ++;
- else
- {
-  m[j] = stoi(*temp);
-  temp++; j++;
- }
+while (!ifile.eof()){
+  x=ifile.get();
+  Freq.freq_table[(unsigned char)x]++;
+  Freq.encoding_table.push_back((unsigned char)x);
 }
-num_of_colors = m[0] * m[1];
-char x=0;
-//map<int , int> frequency_count;
-for (int i=0; i<num_of_colors ; i++){
-  ifile.get(&x,sizeof(char));
-  Freq.freq_table[x]++;
-  Freq.encoding_table.push_back(x);
-}
-for(Freq.freq_table:: iterator it = Freq.freq_table.begin(); it != Freq.freq_table.end(); it++){
-  cout<<it->first<<"->"<<it->second<<endl;}
+for(map<unsigned char , int>:: iterator it = Freq.freq_table.begin(); it != Freq.freq_table.end(); it++){
+  cout<<(unsigned char) it->first<<"->"<<(unsigned char)it->second<<endl;}
   ifile.close();
   return Freq;
 }
